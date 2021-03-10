@@ -18,6 +18,7 @@ git clone git@github.com:mkalkbrenner/PPUCEventDispatcher.git libs/PPUCEventDisp
 git clone git@github.com:mkalkbrenner/PPUCInputController.git libs/PPUCInputController
 git clone git@github.com:mkalkbrenner/PPUCEffectController.git libs/PPUCEffectController
 git clone git@github.com:mkalkbrenner/WS2812SerialFX.git ext_libs/WS2812SerialFX
+git clone git@github.com:mkalkbrenner/WavePWM.git ext_libs/WavePWM
 ```
 
 ## Compile & Upload

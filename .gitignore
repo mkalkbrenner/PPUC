@@ -34,6 +34,7 @@
 .idea
 /ppu
 /ext_libs/WS2812SerialFX/
+/ext_libs/WavePWM/
 /libs/PPUCInputController/
 /libs/PPUCEventDispatcher/
 /libs/PPUCEffectController/
