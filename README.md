@@ -28,7 +28,7 @@ Example:
 cd ppu/STTNG/InputController
 pio run
 pio run --target upload
-cd ../ppu/STTNG/EffectController
+cd ../EffectController
 pio run
 pio run --target upload
 ```
