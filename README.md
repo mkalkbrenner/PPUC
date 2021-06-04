@@ -10,7 +10,7 @@ The additional effects are bundled per pinball machine in so-called *Pinball Pow
 
 ## Motivation
 
-We want to enable people to be creative and to modernize old pinball machines using todays technology. Our goal is to establish an open and affordable platform for that. Ideally people will publish their game-specific PPUs so other could leverage and potentially improve them. We want to see a growing library of PPUs and a vital homebrew pinball community.  
+We want to enable people to be creative and to modernize old pinball machines using today's technology. Our goal is to establish an open and affordable platform for that. Ideally people will publish their game-specific PPUs so others could leverage and potentially improve them. We want to see a growing library of PPUs and a vital homebrew pinball community.  
 
 ## Concept
 
