@@ -14,7 +14,7 @@ We want to enable people to be creative and to modernize old pinball machines us
 
 ## Concept
 
-The Pinball Power-Up Controller is a single board that contains two micro controllers, an Ardunino to capture a pinball's events and a Teensy to run effects. (We slected this combination to ease the usage. Anyone should be able to create his own PPUs using the simple Arduino IDE.)
+The Pinball Power-Up Controller is a single board that contains two micro controllers, an Ardunino to capture a pinball's events and a Teensy to run effects. (We choose this combination to ease the usage. Anyone should be able to create his own PPUs using the simple Arduino IDE.)
 It will be integrated using vendor specific adaptor boards (currently in development: Williams WPC, Data East, Stern SAM and Whitestar).
 
 The controller integrates modified versions of other projects with the permission of their authors:
