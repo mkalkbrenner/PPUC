@@ -33,7 +33,7 @@ The Effect Controller should be able to drive hundreds (or thousands?) of LEDs, 
 
 ## Licence
 
-The code is licenced under GPLv3. Be aware of the fact that your own *Pinball Power-Ups* (PPUs) need to licenced under a compatible licence.
+The code is licenced under GPLv3. Be aware of the fact that your own *Pinball Power-Ups* (PPUs) need to be licenced under a compatible licence.
 That doesn't prevent any commercial use, but you need to respect the terms and conditions of GPLv3!
 
 We would appreciate contributions to PPUC itself or as game-specific PPUs.
