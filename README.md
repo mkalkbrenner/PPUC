@@ -26,6 +26,7 @@ As mentioned above, the controller uses two different micro controllers. Therefo
 * https://github.com/mkalkbrenner/PPUCInputController
 * https://github.com/mkalkbrenner/PPUCEffectController
 * https://github.com/mkalkbrenner/PPUCEventDispatcher
+* https://github.com/mkalkbrenner/PPUCDistributionController
 * https://github.com/mkalkbrenner/WS2812SerialFX
 * https://github.com/mkalkbrenner/WavePWM
 
@@ -47,6 +48,7 @@ git clone git@github.com:mkalkbrenner/ppu.git
 git clone git@github.com:mkalkbrenner/PPUCEventDispatcher.git libs/PPUCEventDispatcher
 git clone git@github.com:mkalkbrenner/PPUCInputController.git libs/PPUCInputController
 git clone git@github.com:mkalkbrenner/PPUCEffectController.git libs/PPUCEffectController
+git clone git@github.com:mkalkbrenner/PPUCDistributionController.git libs/PPUCDistributionController
 git clone git@github.com:mkalkbrenner/WS2812SerialFX.git ext_libs/WS2812SerialFX
 git clone git@github.com:mkalkbrenner/WavePWM.git ext_libs/WavePWM
 ```
