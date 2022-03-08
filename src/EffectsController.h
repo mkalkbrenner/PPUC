@@ -9,7 +9,9 @@
 #define EFFECTSCONTROLLER_h
 
 #include <Arduino.h>
+#if defined(__IMXRT1062__) // Teensy 4.1
 #include <WS2812Serial.h>
+#endif
 #include <WS2812FX.h>
 
 #include "Effects/Effect.h"
@@ -107,10 +109,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[0] = new WS2812Serial(PPUC_NUM_LEDS_1, frameBuffer1, ws2812FXDevices[0][0]->getWS2812FX()->getPixels(), 1, PPUC_LED_TYPE_1);
-                ws2812Serial[0]->begin();
                 ws2812FXDevices[0][0]->getWS2812FX()->init();
-                ws2812FXDevices[0][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow1);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[0] = new WS2812Serial(PPUC_NUM_LEDS_1, frameBuffer1, ws2812FXDevices[0][0]->getWS2812FX()->getPixels(), 1, PPUC_LED_TYPE_1);
+                    ws2812Serial[0]->begin();
+                    ws2812FXDevices[0][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow1);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[0][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[0][0]->off();
@@ -124,10 +130,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[1] = new WS2812Serial(PPUC_NUM_LEDS_2, frameBuffer2, ws2812FXDevices[1][0]->getWS2812FX()->getPixels(), 8, PPUC_LED_TYPE_2);
-                ws2812Serial[1]->begin();
                 ws2812FXDevices[1][0]->getWS2812FX()->init();
-                ws2812FXDevices[1][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow2);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[1] = new WS2812Serial(PPUC_NUM_LEDS_2, frameBuffer2, ws2812FXDevices[1][0]->getWS2812FX()->getPixels(), 8, PPUC_LED_TYPE_2);
+                    ws2812Serial[1]->begin();
+                    ws2812FXDevices[1][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow2);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[1][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[1][0]->off();
@@ -141,10 +151,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[2] = new WS2812Serial(PPUC_NUM_LEDS_3, frameBuffer3, ws2812FXDevices[2][0]->getWS2812FX()->getPixels(), 14, PPUC_LED_TYPE_3);
-                ws2812Serial[2]->begin();
                 ws2812FXDevices[2][0]->getWS2812FX()->init();
-                ws2812FXDevices[2][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow3);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[2] = new WS2812Serial(PPUC_NUM_LEDS_3, frameBuffer3, ws2812FXDevices[2][0]->getWS2812FX()->getPixels(), 14, PPUC_LED_TYPE_3);
+                    ws2812Serial[2]->begin();
+                    ws2812FXDevices[2][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow3);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[2][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[2][0]->off();
@@ -158,10 +172,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[3] = new WS2812Serial(PPUC_NUM_LEDS_4, frameBuffer4, ws2812FXDevices[3][0]->getWS2812FX()->getPixels(), 17, PPUC_LED_TYPE_4);
-                ws2812Serial[3]->begin();
                 ws2812FXDevices[3][0]->getWS2812FX()->init();
-                ws2812FXDevices[3][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow4);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[3] = new WS2812Serial(PPUC_NUM_LEDS_4, frameBuffer4, ws2812FXDevices[3][0]->getWS2812FX()->getPixels(), 17, PPUC_LED_TYPE_4);
+                    ws2812Serial[3]->begin();
+                    ws2812FXDevices[3][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow4);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[3][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[3][0]->off();
@@ -175,10 +193,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[4] = new WS2812Serial(PPUC_NUM_LEDS_5, frameBuffer5, ws2812FXDevices[4][0]->getWS2812FX()->getPixels(), 20, PPUC_LED_TYPE_5);
-                ws2812Serial[4]->begin();
                 ws2812FXDevices[4][0]->getWS2812FX()->init();
-                ws2812FXDevices[4][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow5);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[4] = new WS2812Serial(PPUC_NUM_LEDS_5, frameBuffer5, ws2812FXDevices[4][0]->getWS2812FX()->getPixels(), 20, PPUC_LED_TYPE_5);
+                    ws2812Serial[4]->begin();
+                    ws2812FXDevices[4][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow5);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[4][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[4][0]->off();
@@ -192,10 +214,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[5] = new WS2812Serial(PPUC_NUM_LEDS_6, frameBuffer6, ws2812FXDevices[5][0]->getWS2812FX()->getPixels(), 24, PPUC_LED_TYPE_6);
-                ws2812Serial[5]->begin();
                 ws2812FXDevices[5][0]->getWS2812FX()->init();
-                ws2812FXDevices[5][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow6);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[5] = new WS2812Serial(PPUC_NUM_LEDS_6, frameBuffer6, ws2812FXDevices[5][0]->getWS2812FX()->getPixels(), 24, PPUC_LED_TYPE_6);
+                    ws2812Serial[5]->begin();
+                    ws2812FXDevices[5][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow6);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[5][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[5][0]->off();
@@ -209,10 +235,14 @@ public:
                     0,
                     0
                 );
-                ws2812Serial[6] = new WS2812Serial(PPUC_NUM_LEDS_7, frameBuffer7, ws2812FXDevices[6][0]->getWS2812FX()->getPixels(), 29, PPUC_LED_TYPE_7);
-                ws2812Serial[6]->begin();
                 ws2812FXDevices[6][0]->getWS2812FX()->init();
-                ws2812FXDevices[6][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow7);
+
+                #if defined(__IMXRT1062__) // Teensy 4.1
+                    ws2812Serial[6] = new WS2812Serial(PPUC_NUM_LEDS_7, frameBuffer7, ws2812FXDevices[6][0]->getWS2812FX()->getPixels(), 29, PPUC_LED_TYPE_7);
+                    ws2812Serial[6]->begin();
+                    ws2812FXDevices[6][0]->getWS2812FX()->setCustomShow(EffectsController::ws2812SerialShow7);
+                #endif
+
                 // Brightness will be set via potentiometer later.
                 ws2812FXDevices[6][0]->setBrightness(WS2812FX_BRIGHTNESS);
                 ws2812FXDevices[6][0]->off();
@@ -270,27 +300,29 @@ public:
 
     void handleEvent(Event* event);
 
-    static void ws2812SerialShow1() {
-        effectsControllerInstance->ws2812Serial[0]->show();
-    }
-    static void ws2812SerialShow2() {
-        effectsControllerInstance->ws2812Serial[1]->show();
-    }
-    static void ws2812SerialShow3() {
-        effectsControllerInstance->ws2812Serial[2]->show();
-    }
-    static void ws2812SerialShow4() {
-        effectsControllerInstance->ws2812Serial[3]->show();
-    }
-    static void ws2812SerialShow5() {
-        effectsControllerInstance->ws2812Serial[4]->show();
-    }
-    static void ws2812SerialShow6() {
-        effectsControllerInstance->ws2812Serial[5]->show();
-    }
-    static void ws2812SerialShow7() {
-        effectsControllerInstance->ws2812Serial[6]->show();
-    }
+    #if defined(__IMXRT1062__) // Teensy 4.1
+        static void ws2812SerialShow1() {
+            effectsControllerInstance->ws2812Serial[0]->show();
+        }
+        static void ws2812SerialShow2() {
+            effectsControllerInstance->ws2812Serial[1]->show();
+        }
+        static void ws2812SerialShow3() {
+            effectsControllerInstance->ws2812Serial[2]->show();
+        }
+        static void ws2812SerialShow4() {
+            effectsControllerInstance->ws2812Serial[3]->show();
+        }
+        static void ws2812SerialShow5() {
+            effectsControllerInstance->ws2812Serial[4]->show();
+        }
+        static void ws2812SerialShow6() {
+            effectsControllerInstance->ws2812Serial[5]->show();
+        }
+        static void ws2812SerialShow7() {
+            effectsControllerInstance->ws2812Serial[6]->show();
+        }
+    #endif
 
 private:
     EventDispatcher* _eventDispatcher;
@@ -303,7 +335,9 @@ private:
     int ws2812FXDeviceCounters[7] = {1, 1, 1, 1, 1, 1, 1};
     bool ws2812FXstates[7] = {false, false, false, false, false, false, false};
     bool ws2812FXrunning[7] = {false, false, false, false, false, false, false};
-    WS2812Serial* ws2812Serial[7];
+    #if defined(__IMXRT1062__) // Teensy 4.1
+        WS2812Serial* ws2812Serial[7];
+    #endif
     EffectContainer* stackEffectContainers[EFFECT_STACK_SIZE];
     int stackCounter = -1;
     byte brightnessControl[7] = {0, 0, 0, 0, 0, 0, 0};
