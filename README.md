@@ -14,21 +14,18 @@ We want to enable people to be creative and to modernize old pinball machines us
 
 ## Concept
 
-The Pinball Power-Up Controller is a single board that contains two micro controllers, an Ardunino to capture a pinball's events and a Teensy to run effects. (We choose this combination to ease the usage. Anyone should be able to create his own PPUs using the simple Arduino IDE.)
-It will be integrated using vendor specific adaptor boards (currently in development: Williams WPC, Data East, Stern SAM and Whitestar).
+The Pinball Power-Up Controller consists of multiple micro controllers to perform several tasks in parallel. The entire
+system is modular, so you can choose what you really need. The basic setup consists of an Arduino Mega to capture a
+pinball's events and a Teensy to run effects. (We choose this combination to ease the usage. Anyone should be able to
+create his own PPUs using the simple Arduino IDE.)
+
+We will provide several integrated boards and vendor specific adaptor boards (currently in development: Williams WPC,
+Data East, Stern SAM and Whitestar).
 
 The controller integrates modified versions of other projects with the permission of their authors:
 * https://github.com/sker65/pinball-lw3
 * https://github.com/bitfieldlabs/afterglow
 * https://github.com/bitfieldlabs/aggi
-
-As mentioned above, the controller uses two different micro controllers. Therefore the code is split into specific and common parts and adjusted versions of existing libraries:
-* https://github.com/mkalkbrenner/PPUCInputController
-* https://github.com/mkalkbrenner/PPUCEffectController
-* https://github.com/mkalkbrenner/PPUCEventDispatcher
-* https://github.com/mkalkbrenner/PPUCDistributionController
-* https://github.com/mkalkbrenner/WS2812SerialFX
-* https://github.com/mkalkbrenner/WavePWM
 
 The Effect Controller should be able to drive hundreds (or thousands?) of LEDs, PWM devices, ... in parallel in a non-blocking way.
 
@@ -41,6 +38,7 @@ We would appreciate contributions to PPUC itself or as game-specific PPUs.
 
 ## Setup Development Environment
 
+This is outdated and needs to be adjusted:
 ```
 git clone git@github.com:mkalkbrenner/PPUC.git
 cd PPUC
@@ -67,7 +65,7 @@ pio run --target upload
 
 ## Troubleshooting
 
-If the autodection of the USB ports during `pio run --target upload` doesn't succeed you need to specify them
+If the auto detection of the USB ports during `pio run --target upload` doesn't succeed you need to specify them
 explicitly. Run `pio device list` to list the available ports. Force the usage of a specifc USB port during upload:
 ```
 pio run --target upload --device XYZ
