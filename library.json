@@ -9,7 +9,7 @@
   "version": "0.2.0",
   "downloadUrl": "https://github.com/mkalkbrenner/PPUC/archive/master.zip",
   "frameworks": "arduino",
-  "platforms": "*",
+  "platforms": ["atmelavr", "teensy"],
   "repository": {
     "type": "git",
     "url": "https://github.com/mkalkbrenner/PPUC.git"
