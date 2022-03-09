@@ -15,8 +15,10 @@
     "url": "https://github.com/mkalkbrenner/PPUC.git"
   },
   "license": "GPL-3.0-or-later",
-  "libLDFMode": "off",
-  "libCompatMode": "strict",
+  "build": {
+    "libLDFMode": "off",
+    "libCompatMode": "strict"
+  },
   "dependencies": [
     {
       "owner": "mkalkbrenner",
