@@ -21,22 +21,30 @@
     {
       "owner": "mkalkbrenner",
       "name": "WavePWM",
-      "version": "^0.1.0"
+      "version": "^0.1.0",
+      "frameworks": ["arduino"],
+      "platforms": ["atmelavr", "teensy"]
     },
     {
       "owner": "kitesurfer1404",
       "name": "WS2812FX",
-      "version": "^1.3.5"
+      "version": "^1.3.5",
+      "frameworks": ["arduino"],
+      "platforms": ["atmelavr", "teensy"]
     },
     {
       "owner": "thomasfredericks",
       "name": "Bounce2",
-      "version": "^2.70"
+      "version": "^2.70",
+      "frameworks": ["arduino"],
+      "platforms": ["atmelavr", "teensy"]
     },
     {
       "owner": "PaulStoffregen",
       "name": "TimerOne",
-      "version": "*"
+      "version": "*",
+      "frameworks": ["arduino"],
+      "platforms": ["atmelavr", "teensy"]
     },
     {
       "owner": "PaulStoffregen",
