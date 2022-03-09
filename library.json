@@ -42,5 +42,6 @@
       "version": "https://github.com/PaulStoffregen/WS2812Serial",
       "platforms": ["teensy"]
     }
-  ]
+  ],
+  "libCompatMode": "strict"
 }
