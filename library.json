@@ -49,9 +49,9 @@
       "platforms": ["atmelavr", "teensy"]
     },
     {
-      "owner": "PaulStoffregen",
+      "owner": "mkalkbrenner",
       "name": "WS2812Serial",
-      "version": "https://github.com/PaulStoffregen/WS2812Serial",
+      "version": "https://github.com/mkalkbrenner/WS2812Serial",
       "frameworks": ["arduino"],
       "platforms": ["teensy"]
     }
