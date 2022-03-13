@@ -1,6 +1,7 @@
 # PPUC - Pinball Power-Up Controller
 
-The Pinball Power-Up Controller is designed to enhance the capabilities of classic pinball machines of the 80s and 90s.
+The Pinball Power-Up Controller is designed to enhance the capabilities of classic pinball machines of the 80s and 90s
+and to drive the hardware of home brew pinball machines.
 It is able to monitor all playfield switches, lights, and solenoids and to trigger and distribute corresponding *events*
 to attached sub-systems.
 In combination with PIN2DMD and TiltAudio it should be possible to monitor DMD and sound commands, too.
@@ -10,7 +11,9 @@ The additional effects are bundled per pinball machine in so-called *Pinball Pow
 
 ## Motivation
 
-We want to enable people to be creative and to modernize old pinball machines using today's technology. Our goal is to establish an open and affordable platform for that. Ideally people will publish their game-specific PPUs so others could leverage and potentially improve them. We want to see a growing library of PPUs and a vital homebrew pinball community.  
+We want to enable people to be creative and to modernize old pinball machines using today's technology. Our goal is to
+establish an open and affordable platform for that. Ideally people will publish their game-specific PPUs so others could
+leverage and potentially improve them. We want to see a growing library of PPUs and a vital homebrew pinball community.  
 
 ## Concept
 
@@ -27,29 +30,20 @@ The controller integrates modified versions of other projects with the permissio
 * https://github.com/bitfieldlabs/afterglow
 * https://github.com/bitfieldlabs/aggi
 
-The Effect Controller should be able to drive hundreds (or thousands?) of LEDs, PWM devices, ... in parallel in a non-blocking way.
+The Effect Controller should be able to drive hundreds (or thousands?) of LEDs, PWM devices, ... in parallel in a
+non-blocking way.
 
 ## Licence
 
-The code is licenced under GPLv3. Be aware of the fact that your own *Pinball Power-Ups* (PPUs) need to be licenced under a compatible licence.
+The code is licenced under GPLv3. Be aware of the fact that your own *Pinball Power-Ups* (PPUs) need to be licenced
+under a compatible licence.
 That doesn't prevent any commercial use, but you need to respect the terms and conditions of GPLv3!
 
 We would appreciate contributions to PPUC itself or as game-specific PPUs.
 
 ## Setup Development Environment
 
-This is outdated and needs to be adjusted:
-```
-git clone git@github.com:mkalkbrenner/PPUC.git
-cd PPUC
-git clone git@github.com:mkalkbrenner/ppu.git
-git clone git@github.com:mkalkbrenner/PPUCEventDispatcher.git libs/PPUCEventDispatcher
-git clone git@github.com:mkalkbrenner/PPUCInputController.git libs/PPUCInputController
-git clone git@github.com:mkalkbrenner/PPUCEffectController.git libs/PPUCEffectController
-git clone git@github.com:mkalkbrenner/PPUCDistributionController.git libs/PPUCDistributionController
-git clone git@github.com:mkalkbrenner/WS2812SerialFX.git ext_libs/WS2812SerialFX
-git clone git@github.com:mkalkbrenner/WavePWM.git ext_libs/WavePWM
-```
+todo
 
 ## Compile & Upload
 

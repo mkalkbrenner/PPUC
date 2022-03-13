@@ -7,7 +7,7 @@
     "url": "https://github.com/mkalkbrenner/PPUC"
   },
   "version": "0.2.0",
-  "downloadUrl": "https://github.com/mkalkbrenner/PPUC/archive/master.zip",
+  "downloadUrl": "https://github.com/mkalkbrenner/PPUC/archive/main.zip",
   "frameworks": "arduino",
   "platforms": ["atmelavr", "teensy"],
   "repository": {
@@ -51,7 +51,7 @@
     {
       "owner": "mkalkbrenner",
       "name": "WS2812Serial",
-      "version": "https://github.com/mkalkbrenner/WS2812Serial",
+      "version": "^0.1.0",
       "frameworks": ["arduino"],
       "platforms": ["teensy"]
     }
