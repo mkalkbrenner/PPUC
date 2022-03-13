@@ -6,7 +6,7 @@
     "name": "Markus Kalkbrenner",
     "url": "https://github.com/mkalkbrenner/PPUC"
   },
-  "version": "0.2.0",
+  "version": "0.2.2",
   "downloadUrl": "https://github.com/mkalkbrenner/PPUC/archive/main.zip",
   "frameworks": "arduino",
   "platforms": ["atmelavr", "teensy"],
@@ -15,6 +15,15 @@
     "url": "https://github.com/mkalkbrenner/PPUC.git"
   },
   "license": "GPL-3.0-or-later",
+  "export": {
+    "include":
+    [
+      "src/*",
+      "*.json",
+      "*.md",
+      "LICENSE"
+    ]
+  },
   "build": {
     "libLDFMode": "off",
     "libCompatMode": "strict"
@@ -44,7 +53,7 @@
     {
       "owner": "PaulStoffregen",
       "name": "TimerOne",
-      "version": "*",
+      "version": "https://github.com/PaulStoffregen/TimerOne",
       "frameworks": ["arduino"],
       "platforms": ["atmelavr", "teensy"]
     },
