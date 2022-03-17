@@ -7,7 +7,7 @@ InputController::InputController(String controllerType, byte pf) {
     _eventDispatcher = new EventDispatcher();
     _solenoids = new Solenoids(controllerType, _eventDispatcher);
 
-    if (controllerType == "ArduinoMega") {
+    if (controllerType == "0.1.0") {
         _switchMatrix = new SwitchMatrix(_eventDispatcher, platform);
         _lightMatrix = new LightMatrix(_eventDispatcher, platform);
         _pin2Dmd = new PIN2DMD(_eventDispatcher);
