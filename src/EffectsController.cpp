@@ -138,7 +138,7 @@ void EffectsController::handleEvent(Event* event) {
 
 void EffectsController::update() {
     _testButtons->update();
-    _generalIllumintationWPC->update();
+//    _generalIllumintationWPC->update();
 
     _eventDispatcher->update();
 

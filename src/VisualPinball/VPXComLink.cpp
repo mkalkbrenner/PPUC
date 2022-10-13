@@ -5,7 +5,7 @@
 #include "VPXComLink.h"
 
 void VPXComLink::update() {
-    if (Serial.available() >= 5) {
+    if (Serial.available() >= 6) {
         byte startByte = Serial.read();
         if (startByte == 255) {
             byte sourceId = Serial.read();

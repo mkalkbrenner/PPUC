@@ -70,7 +70,7 @@ void EventDispatcher::callListeners(Event* event, int sender) {
 void EventDispatcher::update() {
     while (stackCounter >= 0) {
         Event* event = stackEvents[stackCounter--];
-        // Integer MAX_CROSS_LINKS is always higher then crossLinks, so this parameters means "no sender, send to all".
+        // Integer MAX_CROSS_LINKS is always higher than crossLinks, so this parameters means "no sender, send to all".
         callListeners(event, MAX_CROSS_LINKS);
     }
 

@@ -25,6 +25,7 @@ EffectsController effectsController("0.1.0", PLATFORM_SYS11);
 void setup() {
     // Debug
     Serial.begin(9600); // USB is always 12 Mbit/sec
+
     effectsController.eventDispatcher()->addListener(new CrossLinkDebugger());
 
     // Setup
@@ -119,7 +120,7 @@ void setup() {
 
     // Start
     effectsController.start();
-    effectsController.generalIllumintationWPC()->start();
+    //effectsController.generalIllumintationWPC()->start();
 }
 
 void loop() {

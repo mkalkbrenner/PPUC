@@ -27,7 +27,7 @@ public:
 
             _eventDispatcher->addListener(_vpxComLink, EVENT_SOURCE_SWITCH);
         } else {
-            Serial.print("Unsupported Effects Controller: ");
+            Serial.print("Unsupported Distribution Controller: ");
             Serial.println(controllerType);
         }
     }
