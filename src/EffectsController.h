@@ -300,6 +300,8 @@ public:
 
     void handleEvent(Event* event);
 
+    void handleEvent(ConfigEvent* event) {}
+
     #if defined(__IMXRT1062__) // Teensy 4.1
         static void ws2812SerialShow1() {
             effectsControllerInstance->ws2812Serial[0]->show();

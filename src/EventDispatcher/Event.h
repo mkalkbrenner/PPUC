@@ -1,6 +1,6 @@
 /*
   Event.h
-  Created by Markus Kalkbrenner, 2021.
+  Created by Markus Kalkbrenner, 2021-2022.
 
   Play more pinball!
 */
@@ -23,24 +23,48 @@
 #define EVENT_NULL            78 // "N" NULL event
 #define EVENT_SOURCE_SOUND    79 // "O" sound command
 #define EVENT_POLL_EVENTS     80 // "P" Poll events command, mainly read switches
+#define EVENT_READ_SWITCHES   82 // "R" Read current state of all switches on i/o boards
 #define EVENT_SOURCE_SOLENOID 83 // "S" VPX/DOF/PUP includes flashers
 #define EVENT_SOURCE_SWITCH   87 // "W" VPX/DOF/PUP
 
+#define CONFIG_TOPIC_COILS    99  // "c"
+#define CONFIG_TOPIC_FLASHERS 102 // "f"
+#define CONFIG_TOPIC_LAMPS    108 // "l"
+#define CONFIG_TOPIC_MECHS    109 // "m"
+#define CONFIG_TOPIC_SWITCHES 115 // "s"
+
+#define CONFIG_TOPIC_NUMBER 78 // "N"
+#define CONFIG_TOPIC_PORT   80 // "P"
+
+typedef unsigned char UINT8;
+typedef unsigned short UINT16;
+typedef unsigned int UINT32;
+
 struct Event {
-    char sourceId;
+    byte sourceId;
     word eventId;
     byte value;
+    bool localFast;
 
-    Event(char sId, word eId) {
+    Event(byte sId, word eId) {
         sourceId = sId;
         eventId = eId;
         value = 1;
+        localFast = false;
     }
 
     Event(char sId, word eId, byte v) {
         sourceId = sId;
         eventId = eId;
         value = v;
+        localFast = false;
+    }
+
+    Event(char sId, word eId, byte v, bool lf) {
+        sourceId = sId;
+        eventId = eId;
+        value = v;
+        localFast = lf;
     }
 
     bool operator==(const Event &other) const {
@@ -51,6 +75,24 @@ struct Event {
 
     bool operator!=(const Event &other) const {
         return !(*this == other);
+    }
+};
+
+struct ConfigEvent {
+    byte sourceId; // EVENT_CONFIGURATION
+    byte boardId;  //
+    byte topic;    // lamps
+    byte index;    // 0, index of assignment
+    byte key;      // ledType, assignment/brightness
+    int value;     // FFFF00FF
+
+    ConfigEvent(char b, char t, char i, char k, int v) {
+        sourceId = EVENT_CONFIGURATION;
+        boardId = b;
+        topic = t;
+        index = i;
+        key = k;
+        value = v;
     }
 };
 

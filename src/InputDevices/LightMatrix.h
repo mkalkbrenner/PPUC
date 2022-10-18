@@ -10,7 +10,9 @@
 #define LightMatrix_h
 
 #include <Arduino.h>
+#if defined (__AVR__) || (__avr__) || (__IMXRT1062__)
 #include <TimerOne.h>
+#endif
 
 #include "Matrix.h"
 #include "../EventDispatcher/Event.h"
@@ -33,7 +35,9 @@ public:
         pinMode(6, OUTPUT);
         pinMode(7, OUTPUT);
 
+#if defined (__AVR__) || (__avr__) || (__IMXRT1062__)
         Timer1.initialize(TTAG_INT_A);
+#endif
     }
 
     void start();

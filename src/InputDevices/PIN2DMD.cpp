@@ -44,7 +44,7 @@ void PIN2DMD::update() {
                     // This looks complicated, but I consider this to be the smartest solution to close the gap between
                     // PIN2DMD 4bit event IDs and PUPPack 8bit event IDs that remains somehow „readable“ in the PIN2DMD
                     // Editor.
-                    eventDispatcher->dispatch(new Event(EVENT_SOURCE_DMD, word((deviceByte & B1111111) - 100, eventByte)));
+                    eventDispatcher->dispatch(new Event(EVENT_SOURCE_DMD, word((deviceByte & 0b1111111) - 100, eventByte)));
                 }
             }
         }

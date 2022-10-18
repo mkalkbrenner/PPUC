@@ -55,7 +55,7 @@ void SwitchMatrix::readRow(int pin) {
             (columnCounter == 0 && digitalRead(CS_X) == LOW)
         ) {
             //Serial.println("READ");
-            rows[columnCounter++] |= ((a & b) | (b & c) | (c & a)) ^ B11111111;
+            rows[columnCounter++] |= ((a & b) | (b & c) | (c & a)) ^ 0b11111111;
         }
         else {
             columnCounter = 255;

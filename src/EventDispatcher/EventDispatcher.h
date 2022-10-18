@@ -31,6 +31,8 @@ public:
 
     void setCrossLinkSerial(HardwareSerial &reference);
 
+    void setSlaveMode(bool slaveMode);
+
     void addCrossLinkSerial(HardwareSerial &reference);
 
     void addListener(EventListener* eventListener, char sourceId);
@@ -42,7 +44,9 @@ public:
     void update();
 
 private:
-    void callListeners(Event* event, int sender);
+    void callListeners(Event* event, int sender, bool flush);
+
+    void callListeners(ConfigEvent* event, int sender);
 
     Event* stackEvents[EVENT_STACK_SIZE];
     int stackCounter = -1;
@@ -52,7 +56,9 @@ private:
     int numListeners = -1;
 
     byte msg[6] = {0};
+    byte cmsg[11] = {0};
 
+    bool slaveMode = false;
     int crossLink = -1;
     HardwareSerial* hwSerial[MAX_CROSS_LINKS];
 };

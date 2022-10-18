@@ -30,6 +30,8 @@ public:
 
     void handleEvent(Event* event);
 
+    void handleEvent(ConfigEvent* event) {}
+
     void postEvent(char msgtype, int msgindex, int msgvalue);
 
     void customCommand(char msgtype, int msgindex, int msgvalue);

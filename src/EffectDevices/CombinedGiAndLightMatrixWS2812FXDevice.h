@@ -106,6 +106,7 @@ public:
     void setAfterGlow(int ms);
 
     void handleEvent(Event* event);
+    void handleEvent(ConfigEvent* event) {}
     void updateAfterGlow();
 
 protected:

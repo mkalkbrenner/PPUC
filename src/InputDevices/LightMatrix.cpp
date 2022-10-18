@@ -1,4 +1,6 @@
+#if defined (__AVR__) || (__avr__) || (__IMXRT1062__)
 #include <TimerOne.h>
+#endif
 
 #include "LightMatrix.h"
 
@@ -6,11 +8,15 @@
 LightMatrix* LightMatrix::lightMatrixInstance = NULL;
 
 void LightMatrix::start() {
+#if defined (__AVR__) || (__avr__) || (__IMXRT1062__)
     Timer1.attachInterrupt(LightMatrix::_readRow);
+#endif
 }
 
 void LightMatrix::stop() {
+#if defined (__AVR__) || (__avr__) || (__IMXRT1062__)
     Timer1.detachInterrupt();
+#endif
 }
 
 void LightMatrix::_readRow() {

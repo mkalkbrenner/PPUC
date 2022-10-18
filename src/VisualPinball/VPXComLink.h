@@ -25,6 +25,8 @@ public:
 
     void handleEvent(Event* event);
 
+    void handleEvent(ConfigEvent* event) {}
+
 private:
     EventDispatcher* eventDispatcher;
 

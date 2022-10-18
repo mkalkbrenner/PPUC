@@ -14,7 +14,7 @@ jobs:
 
         strategy:
             matrix:
-                controller: ['DistributionController', 'EffectController', 'InputController']
+                controller: ['DistributionController', 'EffectController', 'InputController', 'IOBoardController']
 
         name: PPUC ${{ matrix.controller }}
 

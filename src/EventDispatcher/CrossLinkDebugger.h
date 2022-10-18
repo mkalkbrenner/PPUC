@@ -18,6 +18,8 @@ public:
     CrossLinkDebugger() {}
 
     void handleEvent(Event* event);
+    void handleEvent(ConfigEvent* event);
+
 };
 
 #endif
