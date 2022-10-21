@@ -11,6 +11,7 @@
 #define PLATFORM_WPC           1
 #define PLATFORM_DATA_EAST     2
 #define PLATFORM_SYS11         3
+#define PLATFORM_LIBPINMAME    100
 
 #define EVENT_SOURCE_ANY      42 // "*"
 #define EVENT_SOURCE_DEBUG    66 // "B" Debug

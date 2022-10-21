@@ -11,6 +11,8 @@
 #include <Arduino.h>
 #if defined(__IMXRT1062__) // Teensy 4.1
 #include <WS2812Serial.h>
+#else
+#include <Adafruit_NeoPixel.h>
 #endif
 #include <WS2812FX.h>
 
@@ -46,38 +48,40 @@
 #define UPDATE_INTERVAL_WS2812FX_AFTERGLOW 3
 #define UPDATE_INTERVAL_WS2812FX_BRIGHTNESS 10
 
-#if defined(PPUC_NUM_LEDS_1) && defined(PPUC_LED_TYPE_1)
+#if defined(PPUC_NUM_LEDS_1) && defined(PPUC_LED_TYPE_1) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer1[PPUC_NUM_LEDS_1 * ((PPUC_LED_TYPE_1 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_2) && defined(PPUC_LED_TYPE_2)
+#if defined(PPUC_NUM_LEDS_2) && defined(PPUC_LED_TYPE_2) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer2[PPUC_NUM_LEDS_2 * ((PPUC_LED_TYPE_2 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_3) && defined(PPUC_LED_TYPE_3)
+#if defined(PPUC_NUM_LEDS_3) && defined(PPUC_LED_TYPE_3) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer3[PPUC_NUM_LEDS_3 * ((PPUC_LED_TYPE_3 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_4) && defined(PPUC_LED_TYPE_4)
+#if defined(PPUC_NUM_LEDS_4) && defined(PPUC_LED_TYPE_4) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer4[PPUC_NUM_LEDS_4 * ((PPUC_LED_TYPE_4 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_5) && defined(PPUC_LED_TYPE_5)
+#if defined(PPUC_NUM_LEDS_5) && defined(PPUC_LED_TYPE_5) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer5[PPUC_NUM_LEDS_5 * ((PPUC_LED_TYPE_5 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_6) && defined(PPUC_LED_TYPE_6)
+#if defined(PPUC_NUM_LEDS_6) && defined(PPUC_LED_TYPE_6) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer6[PPUC_NUM_LEDS_6 * ((PPUC_LED_TYPE_6 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
-#if defined(PPUC_NUM_LEDS_7) && defined(PPUC_LED_TYPE_7)
+#if defined(PPUC_NUM_LEDS_7) && defined(PPUC_LED_TYPE_7) && defined(__IMXRT1062__)
     DMAMEM byte frameBuffer7[PPUC_NUM_LEDS_7 * ((PPUC_LED_TYPE_7 < 6) ? 3 : 4) * 4]; // 12 bytes per LED for RGB, 16 bytes for RGBW
 #endif
 
 class EffectsController : public EventListener {
 
 public:
-    EffectsController(String controllerType, int pinballType) : EventListener(){
+    EffectsController(String controllerType, int pf) : EventListener(){
+        platform = pf;
+
         effectsControllerInstance = this;
         _eventDispatcher = new EventDispatcher();
         _eventDispatcher->addListener(this);
@@ -250,7 +254,7 @@ public:
             #endif
             _testButtons = new EffectControllerTestButtons(_eventDispatcher);
 
-            if (pinballType == PLATFORM_WPC) {
+            if (platform == PLATFORM_WPC) {
                 _generalIllumintationWPC = new GeneralIlluminationWPC(_eventDispatcher);
                 _generalIllumintationWPC->start();
             }
@@ -345,6 +349,8 @@ private:
     byte brightnessControl[7] = {0, 0, 0, 0, 0, 0, 0};
     byte brightnessReads[4] = {0, 0, 0, 0};
     int mode = 0;
+
+    byte platform;
 
     unsigned long ws2812UpdateInterval = 0;
     unsigned long ws2812AfterGlowUpdateInterval = 0;

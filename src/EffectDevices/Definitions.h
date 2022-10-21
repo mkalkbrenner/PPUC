@@ -8,7 +8,44 @@
 #ifndef Definitions_h
 #define Definitions_h
 
+#if defined(__IMXRT1062__) // Teensy 4.1
 #include <WS2812Serial.h>
+#else
+#include <Adafruit_NeoPixel.h>
+
+#define WS2812_RGB NEO_RGB
+#define WS2812_RBG NEO_RBG
+#define WS2812_GBR NEO_GBR
+#define WS2812_GRB NEO_GRB
+#define WS2812_BRG NEO_BRG
+#define WS2812_BGR NEO_BGR
+
+#define WS2812_RGBW NEO_RGBW
+#define WS2812_RBGW NEO_RBGW
+#define WS2812_GBRW NEO_GBRW
+#define WS2812_GRBW NEO_GRBW
+#define WS2812_BRGW NEO_BRGW
+#define WS2812_BGRW NEO_BGRW
+#define WS2812_WRGB NEO_WRGB
+#define WS2812_WRBG NEO_WRBG
+#define WS2812_WGRB NEO_WGRB
+#define WS2812_WGBR NEO_WGBR
+#define WS2812_WBRG NEO_WBRG
+#define WS2812_WBGR NEO_WBGR
+#define WS2812_RWGB NEO_RWGB
+#define WS2812_RWBG NEO_RWBG
+#define WS2812_GWRB NEO_GWRB
+#define WS2812_GWBR NEO_GWBR
+#define WS2812_BWRG NEO_BWRG
+#define WS2812_BWGR NEO_BWGR
+#define WS2812_RGWB NEO_RGWB
+#define WS2812_RBWG NEO_RBWG
+#define WS2812_GRWB NEO_GRWB
+#define WS2812_GBWR NEO_GBWR
+#define WS2812_BRWG NEO_BRWG
+#define WS2812_BGWR NEO_BGWR
+
+#endif
 
 #define SK6812_RGBW WS2812_RGBW
 #define SK6812_RBGW WS2812_RBGW
