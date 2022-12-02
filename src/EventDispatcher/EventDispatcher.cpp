@@ -9,6 +9,13 @@ EventDispatcher::EventDispatcher() {
     cmsg[10] = (byte) 255;
 }
 
+void EventDispatcher::setRS485ModePin(int pin) {
+    rs485 = true;
+    rs485Pin = pin;
+    pinMode(rs485Pin, OUTPUT);
+    digitalWrite(rs485Pin, LOW); // Read.
+}
+
 // Backward Compatibility, use addCrossLinkSerial().
 void EventDispatcher::setCrossLinkSerial(HardwareSerial &reference) {
     crossLink = -1;
@@ -58,7 +65,7 @@ void EventDispatcher::callListeners(Event* event, int sender, bool flush) {
         }
     }
 
-    if (!slaveMode || flush) {
+    if (!rs485 || flush) {
         // Send to other micro controller. But only if there's room left in write buffer. Otherwise the program will be
         // blocked. The buffer gets full if the data is not fetched by the other controller for any reason.
         // @todo Possible optimization to check hwSerial->availableForWrite() >= 6 failed on Arduino for unknown reason.
@@ -114,7 +121,7 @@ void EventDispatcher::callListeners(ConfigEvent* event, int sender) {
 }
 
 void EventDispatcher::update() {
-    if (!slaveMode) {
+    if (!rs485) {
         while (stackCounter >= 0) {
             Event *event = stackEvents[stackCounter--];
             // Integer MAX_CROSS_LINKS is always higher than crossLinks, so this parameters means "no sender, send to all".
@@ -144,12 +151,14 @@ void EventDispatcher::update() {
                         callListeners(new ConfigEvent(boardId, topic, index, key, value), i);
                     }
                     else {
-                        if (sourceId == EVENT_POLL_EVENTS && slaveMode) {
+                        if (sourceId == EVENT_POLL_EVENTS && rs485) {
+                            digitalWrite(rs485Pin, HIGH); // Write.
                             while (stackCounter >= 0) {
                                 Event *event = stackEvents[stackCounter--];
                                 // Integer MAX_CROSS_LINKS is always higher than crossLinks, so this parameters means "no sender, send to all".
                                 callListeners(event, MAX_CROSS_LINKS, true);
                             }
+                            digitalWrite(rs485Pin, LOW); // Read.
                         }
 
                         word eventId = word(hwSerial[i]->read(), hwSerial[i]->read());

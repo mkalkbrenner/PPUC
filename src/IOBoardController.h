@@ -37,6 +37,8 @@ public:
 
     void handleEvent(ConfigEvent* event);
 
+    void update();
+
 private:
     PwmDevices* _pwmDevices;
     Switches* _switches;

@@ -1,23 +1,32 @@
 #include "IOBoardController.h"
 
 IOBoardController::IOBoardController(String controllerType) {
-    // Setup RS485 control Pins.
-    pinMode(LED_BUILTIN, OUTPUT);
-
-    // Read bordID.
-    // @todo draft!
-    boardId = (analogRead(28) - 100) / 16 ;
-
     _eventDispatcher = new EventDispatcher();
     _eventDispatcher->addListener(this, EVENT_CONFIGURATION);
 
     if (controllerType == "0.1.0") {
+        // Read bordID.
+        // @todo draft!
+        boardId = (analogRead(28) - 100) / 16 ;
+
+        Serial1.setTX(16);
+        Serial1.setRX(17);
+        _eventDispatcher->setRS485ModePin(18);
+        Serial1.setFIFOSize(128); // @todo find the right size.
+        _eventDispatcher->addCrossLinkSerial(Serial1);
+
         _pwmDevices = new PwmDevices(_eventDispatcher);
         _switches = new Switches(boardId, _eventDispatcher);
     } else {
         Serial.print("Unsupported Input Controller: ");
         Serial.println(controllerType);
     }
+}
+
+void IOBoardController::update() {
+    switches()->update();
+    pwmDevices()->update();
+    eventDispatcher()->update();
 }
 
 void IOBoardController::handleEvent(ConfigEvent* event) {

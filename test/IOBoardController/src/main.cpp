@@ -8,13 +8,8 @@
 IOBoardController ioBoardController("0.1.0");
 
 void setup() {
-    Serial.begin(115200);
-
-    ioBoardController.eventDispatcher()->addCrossLinkSerial(Serial);
 }
 
 void loop() {
-    ioBoardController.switches()->update();
-    ioBoardController.pwmDevices()->update();
-    ioBoardController.eventDispatcher()->update();
+    ioBoardController.update();
 }

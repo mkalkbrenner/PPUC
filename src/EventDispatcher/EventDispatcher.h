@@ -31,7 +31,7 @@ public:
 
     void setCrossLinkSerial(HardwareSerial &reference);
 
-    void setSlaveMode(bool slaveMode);
+    void setRS485ModePin(int pin);
 
     void addCrossLinkSerial(HardwareSerial &reference);
 
@@ -58,7 +58,8 @@ private:
     byte msg[6] = {0};
     byte cmsg[11] = {0};
 
-    bool slaveMode = false;
+    bool rs485 = false;
+    int rs485Pin = 0;
     int crossLink = -1;
     HardwareSerial* hwSerial[MAX_CROSS_LINKS];
 };
