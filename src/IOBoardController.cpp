@@ -6,13 +6,13 @@ IOBoardController::IOBoardController(String controllerType) {
 
     // Read bordID.
     // @todo draft!
-    boardId = (analogRead(17) - 100) / 16 ;
+    boardId = (analogRead(28) - 100) / 16 ;
 
     _eventDispatcher = new EventDispatcher();
     _eventDispatcher->addListener(this, EVENT_CONFIGURATION);
 
     if (controllerType == "0.1.0") {
-        _pwmDevices = new PwmDevices(boardId, _eventDispatcher);
+        _pwmDevices = new PwmDevices(_eventDispatcher);
         _switches = new Switches(boardId, _eventDispatcher);
     } else {
         Serial.print("Unsupported Input Controller: ");
@@ -27,18 +27,57 @@ void IOBoardController::handleEvent(ConfigEvent* event) {
                 switch (event->key) {
                     case CONFIG_TOPIC_PORT:
                         port = event->value;
-                        if (number) {
-                            _switches->registerSwitch(port, number);
-                            port = 0;
-                            number = 0;
-                        }
+                        break;
+                    case CONFIG_TOPIC_NUMBER:
+                        _switches->registerSwitch((byte) port, event->value);
+                        break;
+                }
+                break;
+
+            case CONFIG_TOPIC_PWM:
+                switch (event->key) {
+                    case CONFIG_TOPIC_PORT:
+                        port = event->value;
+                        number = 0;
+                        power = 0;
+                        minPulseTime = 0;
+                        maxPulseTime = 0;
+                        holdPower = 0;
+                        holdPowerActivationTime = 0;
+                        fastSwitch = 0;
                         break;
                     case CONFIG_TOPIC_NUMBER:
                         number = event->value;
-                        if (port) {
-                            _switches->registerSwitch(port, number);
-                            port = 0;
-                            number = 0;
+                        break;
+                    case CONFIG_TOPIC_POWER:
+                        power = event->value;
+                        break;
+                    case CONFIG_TOPIC_MIN_PULSE_TIME:
+                        minPulseTime = event->value;
+                        break;
+                    case CONFIG_TOPIC_MAX_PULSE_TIME:
+                        maxPulseTime = event->value;
+                        break;
+                    case CONFIG_TOPIC_HOLD_POWER:
+                        holdPower = event->value;
+                        break;
+                    case CONFIG_TOPIC_HOLD_POWER_ACTIVATION_TIME:
+                        holdPowerActivationTime = event->value;
+                        break;
+                    case CONFIG_TOPIC_FAST_SWITCH:
+                        fastSwitch = event->value;
+                        break;
+                    case CONFIG_TOPIC_TYPE:
+                        switch (event->value) {
+                            case 1: // Coil
+                                _pwmDevices->registerSolenoid((byte) port, number, power, minPulseTime, maxPulseTime, holdPower, holdPowerActivationTime, fastSwitch);
+                                break;
+                            case 2: // Flasher
+                                _pwmDevices->registerFlasher((byte) port, number, power);
+                                break;
+                            case 3: // Lamp
+                                _pwmDevices->registerLamp((byte) port, number, power);
+                                break;
                         }
                         break;
                 }

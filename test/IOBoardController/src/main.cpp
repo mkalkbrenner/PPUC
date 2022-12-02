@@ -8,13 +8,13 @@
 IOBoardController ioBoardController("0.1.0");
 
 void setup() {
-    Serial.begin(9600); // USB is always 12 Mbit/sec
+    Serial.begin(115200);
 
     ioBoardController.eventDispatcher()->addCrossLinkSerial(Serial);
 }
 
 void loop() {
     ioBoardController.switches()->update();
-
+    ioBoardController.pwmDevices()->update();
     ioBoardController.eventDispatcher()->update();
 }
