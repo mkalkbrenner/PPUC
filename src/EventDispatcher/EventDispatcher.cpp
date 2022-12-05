@@ -16,6 +16,13 @@ void EventDispatcher::setRS485ModePin(int pin) {
     digitalWrite(rs485Pin, LOW); // Read.
 }
 
+void EventDispatcher::setMultiCoreCrossLink(MultiCoreCrossLink* mccl) {
+#if defined(ARDUINO_ARCH_MBED_RP2040) || defined(ARDUINO_ARCH_RP2040)
+    multiCoreCrossLink = mccl;
+    multiCore = true;
+#endif
+}
+
 // Backward Compatibility, use addCrossLinkSerial().
 void EventDispatcher::setCrossLinkSerial(HardwareSerial &reference) {
     crossLink = -1;
@@ -84,6 +91,12 @@ void EventDispatcher::callListeners(Event* event, int sender, bool flush) {
                 }
             }
         }
+
+#if defined(ARDUINO_ARCH_MBED_RP2040) || defined(ARDUINO_ARCH_RP2040)
+        if (multiCore && sender != -1) {
+            multiCoreCrossLink->pushEventNonBlocking(event);
+        }
+#endif
     }
 
     // delete the event and free the memory
@@ -97,23 +110,31 @@ void EventDispatcher::callListeners(ConfigEvent* event, int sender) {
         }
     }
 
-    if (crossLink != -1 /* && hwSerial->availableForWrite() >= 6 */) {
-        //     = (byte) 255;
-        cmsg[2] = (byte) event->boardId;
-        cmsg[3] = event->topic;
-        cmsg[4] = event->index;
-        cmsg[5] = event->key;
-        cmsg[6] = event->value >> 24;
-        cmsg[7] = (event->value >> 16) & 0xff;
-        cmsg[8] = (event->value >> 8) & 0xff;
-        cmsg[9] = event->value & 0xff;
-        //     = (byte) 255;
+    if (sender != -1) {
+        if (crossLink != -1 /* && hwSerial->availableForWrite() >= 6 */) {
+            //     = (byte) 255;
+            cmsg[2] = (byte) event->boardId;
+            cmsg[3] = event->topic;
+            cmsg[4] = event->index;
+            cmsg[5] = event->key;
+            cmsg[6] = event->value >> 24;
+            cmsg[7] = (event->value >> 16) & 0xff;
+            cmsg[8] = (event->value >> 8) & 0xff;
+            cmsg[9] = event->value & 0xff;
+            //     = (byte) 255;
 
-        for (int i = 0; i <= crossLink; i++) {
-            if (i != sender) {
-                hwSerial[i]->write(cmsg, 11);
+            for (int i = 0; i <= crossLink; i++) {
+                if (i != sender) {
+                    hwSerial[i]->write(cmsg, 11);
+                }
             }
         }
+
+#if defined(ARDUINO_ARCH_MBED_RP2040) || defined(ARDUINO_ARCH_RP2040)
+        if (multiCoreCrossLink) {
+            multiCoreCrossLink->pushConfigEvent(event);
+        }
+#endif
     }
 
     // delete the event and free the memory
@@ -174,4 +195,23 @@ void EventDispatcher::update() {
             }
         }
     }
+
+#if defined(ARDUINO_ARCH_MBED_RP2040) || defined(ARDUINO_ARCH_RP2040)
+    if (multiCoreCrossLink) {
+        if (multiCoreCrossLink->eventAvailable()) {
+            Event *event;
+            if (multiCoreCrossLink->popEventNonBlocking(event)) {
+                callListeners(event, -1, false);
+            }
+        }
+
+        if (multiCoreCrossLink->configEventAvailable()) {
+            ConfigEvent *configEvent;
+            if (multiCoreCrossLink->popConfigEventNonBlocking(configEvent)) {
+                callListeners(configEvent, -1);
+            }
+        }
+    }
+#endif
+
 }

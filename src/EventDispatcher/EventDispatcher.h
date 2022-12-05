@@ -10,6 +10,8 @@
 
 #include <Arduino.h>
 
+#include "MultiCoreCrossLink.h"
+
 #include "Event.h"
 #include "EventListener.h"
 
@@ -29,9 +31,11 @@ class EventDispatcher {
 public:
     EventDispatcher();
 
-    void setCrossLinkSerial(HardwareSerial &reference);
-
     void setRS485ModePin(int pin);
+
+    void setMultiCoreCrossLink(MultiCoreCrossLink* mccl);
+
+    void setCrossLinkSerial(HardwareSerial &reference);
 
     void addCrossLinkSerial(HardwareSerial &reference);
 
@@ -60,8 +64,10 @@ private:
 
     bool rs485 = false;
     int rs485Pin = 0;
+    bool multiCore = false;
     int crossLink = -1;
     HardwareSerial* hwSerial[MAX_CROSS_LINKS];
+    MultiCoreCrossLink* multiCoreCrossLink;
 };
 
 #endif

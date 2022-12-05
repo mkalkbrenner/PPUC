@@ -74,6 +74,13 @@ struct Event {
         localFast = lf;
     }
 
+    Event(const Event* other) {
+        sourceId = other->sourceId;
+        eventId = other->eventId;
+        value = other->value;
+        localFast = other->localFast;
+    }
+
     bool operator==(const Event &other) const {
         return this->sourceId == other.sourceId
             && this->eventId == other.eventId
@@ -100,6 +107,15 @@ struct ConfigEvent {
         index = i;
         key = k;
         value = v;
+    }
+
+    ConfigEvent(const ConfigEvent* other) {
+        sourceId = other->sourceId;
+        boardId = other->boardId;
+        topic = other->topic;
+        index = other->index;
+        key = other->key;
+        value = other->value;
     }
 };
 
