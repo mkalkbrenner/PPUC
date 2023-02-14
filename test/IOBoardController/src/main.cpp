@@ -1,4 +1,4 @@
-// Markus Kalkbrenner 2022
+// Markus Kalkbrenner 2022-2023
 // Note to self: Play more pinball!
 
 #include <Arduino.h>
@@ -6,8 +6,8 @@
 #include "EffectsController.h"
 #include "IOBoardController.h"
 
-IOBoardController ioBoardController("0.1.0");
-EffectsController effectsController("0.1.0", PLATFORM_WPC);
+IOBoardController ioBoardController(CONTROLLER_16_8_1);
+EffectsController effectsController(CONTROLLER_16_8_1, PLATFORM_WPC);
 MultiCoreCrossLink* multiCoreCrossLink = new MultiCoreCrossLink();
 
 void setup() {

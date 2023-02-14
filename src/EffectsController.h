@@ -79,14 +79,14 @@
 class EffectsController : public EventListener {
 
 public:
-    EffectsController(String controllerType, int pf) : EventListener(){
+    EffectsController(int controllerType, int pf) : EventListener(){
         platform = pf;
 
         effectsControllerInstance = this;
         _eventDispatcher = new EventDispatcher();
         _eventDispatcher->addListener(this);
 
-        if (controllerType == "0.1.0" || "0.2.0") {
+        if (controllerType == CONTROLLER_MEGA_ALL_INPUT || controllerType == CONTROLLER_MEGA_ALL_INPUT_2) {
             _ledBuiltInDevice = new LedBuiltInDevice();
             _ledBuiltInDevice->on();
             _nullDevice = new NullDevice();
@@ -95,7 +95,7 @@ public:
             _shakerPWMDevice->off();
             _ledPWMDevice = new WavePWMDevice(37);
             _ledPWMDevice->off();
-            if (controllerType != "0.1.0") {
+            if (controllerType != CONTROLLER_MEGA_ALL_INPUT) {
                 _rgbStripeDevice = new RgbStripDevice(9, 10, 11);
                 _rgbStripeDevice->off();
             }
@@ -258,6 +258,33 @@ public:
                 _generalIllumintationWPC = new GeneralIlluminationWPC(_eventDispatcher);
                 _generalIllumintationWPC->start();
             }
+        }
+        else if (controllerType == CONTROLLER_NANO_PIN2DMD_GI) {
+            _ledBuiltInDevice = new LedBuiltInDevice();
+            _ledBuiltInDevice->on();
+            _nullDevice = new NullDevice();
+            _shakerPWMDevice = new WavePWMDevice(9);
+            _shakerPWMDevice->off();
+            #if defined(PPUC_NUM_LEDS_1) && defined(PPUC_LED_TYPE_1)
+                ws2812FXDevices[0][0] = new WS2812FXDevice(
+                    new WS2812FX(PPUC_NUM_LEDS_1, 6, PPUC_LED_TYPE_1),
+                    0,
+                    PPUC_NUM_LEDS_1 - 1,
+                    0,
+                    0
+                );
+                ws2812FXDevices[0][0]->getWS2812FX()->init();
+
+                // Brightness will be set via potentiometer later.
+                ws2812FXDevices[0][0]->setBrightness(WS2812FX_BRIGHTNESS);
+                ws2812FXDevices[0][0]->off();
+                ws2812FXstates[0] = true;
+            #endif
+        }
+        else if (controllerType == CONTROLLER_16_8_1) {
+            // Read bordID.
+            // @todo draft!
+            boardId = (analogRead(28) - 100) / 16 ;
         } else {
             Serial.print("Unsupported Effects Controller: ");
             Serial.println(controllerType);
@@ -304,7 +331,7 @@ public:
 
     void handleEvent(Event* event);
 
-    void handleEvent(ConfigEvent* event) {}
+    void handleEvent(ConfigEvent* event);
 
     #if defined(__IMXRT1062__) // Teensy 4.1
         static void ws2812SerialShow1() {
@@ -351,6 +378,12 @@ private:
     int mode = 0;
 
     byte platform;
+    byte boardId = 255;
+    byte port = 0;
+    byte type = 0;
+    byte amount = 0;
+    byte afterGlow = 0;
+    byte heatUp = 0;
 
     unsigned long ws2812UpdateInterval = 0;
     unsigned long ws2812AfterGlowUpdateInterval = 0;

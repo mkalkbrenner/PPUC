@@ -1,19 +1,21 @@
 #include "IOBoardController.h"
 
-IOBoardController::IOBoardController(String controllerType) {
+IOBoardController::IOBoardController(int controllerType) {
     _eventDispatcher = new EventDispatcher();
     _eventDispatcher->addListener(this, EVENT_CONFIGURATION);
 
-    if (controllerType == "0.1.0") {
+    if (controllerType == CONTROLLER_16_8_1) {
         // Read bordID.
         // @todo draft!
         boardId = (analogRead(28) - 100) / 16 ;
 
+        #if defined(ARDUINO_ARCH_MBED_RP2040) || defined(ARDUINO_ARCH_RP2040)
         Serial1.setTX(16);
         Serial1.setRX(17);
         _eventDispatcher->setRS485ModePin(18);
         Serial1.setFIFOSize(128); // @todo find the right size.
         _eventDispatcher->addCrossLinkSerial(Serial1);
+        #endif
 
         _pwmDevices = new PwmDevices(_eventDispatcher);
         _switches = new Switches(boardId, _eventDispatcher);

@@ -136,6 +136,47 @@ void EffectsController::handleEvent(Event* event) {
     }
 }
 
+void EffectsController::handleEvent(ConfigEvent* event) {
+    if (event->boardId == boardId) {
+        switch (event->topic) {
+            case CONFIG_TOPIC_LED_STRING:
+                switch (event->key) {
+                    case CONFIG_TOPIC_PORT:
+                        port = event->value;
+                        type = 0;
+                        amount = 0;
+                        afterGlow = 0;
+                        break;
+                    case CONFIG_TOPIC_TYPE:
+                        type = event->value;
+                        break;
+                    case CONFIG_TOPIC_AMOUNT_LEDS:
+                        amount = event->value;
+                        break;
+                    case CONFIG_TOPIC_AFTER_GLOW:
+                        afterGlow = event->value;
+                        break;
+                    case CONFIG_TOPIC_LIGHT_UP:
+                        heatUp = event->value;
+                        ws2812FXDevices[0][0] = new WS2812FXDevice(
+                                new WS2812FX(amount, port, type),
+                                0,
+                                amount - 1,
+                                0,
+                                0
+                        );
+                        ws2812FXDevices[0][0]->getWS2812FX()->init();
+                        // Brightness might be overwritten later.
+                        ws2812FXDevices[0][0]->setBrightness(WS2812FX_BRIGHTNESS);
+                        ws2812FXDevices[0][0]->off();
+                        ws2812FXstates[0] = true;
+                        break;
+                }
+                break;
+        }
+    }
+}
+
 void EffectsController::update() {
     _testButtons->update();
 

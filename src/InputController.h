@@ -21,7 +21,9 @@
 
 class InputController {
 public:
-    InputController(String controllerType, byte platform);
+    InputController(int controllerType, byte platform);
+
+    InputController(int controllerType, byte platform, EventDispatcher* eventDispatcher);
 
     Solenoids* solenoids();
 

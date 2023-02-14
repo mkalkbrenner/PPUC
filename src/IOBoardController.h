@@ -25,7 +25,7 @@
 
 class IOBoardController : public EventListener {
 public:
-    IOBoardController(String controllerType);
+    IOBoardController(int controllerType);
 
     PwmDevices* pwmDevices();
 
