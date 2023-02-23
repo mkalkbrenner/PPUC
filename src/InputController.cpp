@@ -19,7 +19,7 @@ InputController::InputController(int controllerType, byte pf, EventDispatcher* e
         _pupComLink = new PUPComLink();
         _testButtons = new InputControllerTestButtons(_eventDispatcher);
     }
-    else if (controllerType == CONTROLLER_NANO_PIN2DMD_GI) {
+    else if (controllerType == CONTROLLER_NANO_PIN2DMD_OUTPUT) {
         _pin2Dmd = new PIN2DMD(_eventDispatcher);
     } else {
         Serial.print("Unsupported Input Controller: ");

@@ -264,7 +264,7 @@ public:
                 _generalIllumintationWPC->start();
             }
         }
-        else if (controllerType == CONTROLLER_NANO_PIN2DMD_GI) {
+        else if (controllerType == CONTROLLER_NANO_PIN2DMD_OUTPUT) {
             _ledBuiltInDevice = new LedBuiltInDevice();
             _ledBuiltInDevice->on();
             _nullDevice = new NullDevice();
