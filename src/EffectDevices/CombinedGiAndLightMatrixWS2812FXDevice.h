@@ -82,22 +82,24 @@ public:
     void on();
     void off();
 
-    void assignLedToGiString(uint8_t giString, int8_t led);
-    void assignLedToGiString(uint8_t giString, int8_t led, uint32_t color);
+    void assignLedToGiString(uint8_t giString, int16_t led);
+    void assignLedToGiString(uint8_t giString, int16_t led, uint32_t color);
 
-    void assignLedToLightMatrix(uint8_t column, uint8_t row, int8_t led);
-    void assignLedToLightMatrix(uint8_t column, uint8_t row, int8_t led, uint32_t color);
+    void assignLedRangeToGiString(uint8_t giString, int16_t first, int16_t last);
 
-    void assignLedToLightMatrixWPC(uint8_t number, int8_t led);
-    void assignLedToLightMatrixWPC(uint8_t number, int8_t led, uint32_t color);
+    void assignLedToLightMatrix(uint8_t column, uint8_t row, int16_t led);
+    void assignLedToLightMatrix(uint8_t column, uint8_t row, int16_t led, uint32_t color);
 
-    void assignLedToLightMatrixDE(uint8_t number, int8_t led);
-    void assignLedToLightMatrixDE(uint8_t number, int8_t led, uint32_t color);
+    void assignLedToLightMatrixWPC(uint8_t number, int16_t led);
+    void assignLedToLightMatrixWPC(uint8_t number, int16_t led, uint32_t color);
 
-    void assignLedToLightMatrixSYS11(uint8_t number, int8_t led);
-    void assignLedToLightMatrixSYS11(uint8_t number, int8_t led, uint32_t color);
+    void assignLedToLightMatrixDE(uint8_t number, int16_t led);
+    void assignLedToLightMatrixDE(uint8_t number, int16_t led, uint32_t color);
 
-    void setDimmedPixelColor(int led, uint32_t color, uint8_t brightness);
+    void assignLedToLightMatrixSYS11(uint8_t number, int16_t led);
+    void assignLedToLightMatrixSYS11(uint8_t number, int16_t led, uint32_t color);
+
+    void setDimmedPixelColor(int16_t led, uint32_t color, uint8_t brightness);
 
     void setHeatUp();
     void setAfterGlow();
@@ -110,7 +112,7 @@ public:
     void updateAfterGlow();
 
 protected:
-    uint8_t numLEDsGI[NUM_GI_STRINGS] = {0};
+    int16_t numLEDsGI[NUM_GI_STRINGS] = {0};
 
     int16_t ledGIPositions[NUM_GI_STRINGS][_MAX_LEDS_GI_STRING] = {{0}};
     uint32_t ledGIColors[NUM_GI_STRINGS][_MAX_LEDS_GI_STRING] = {{0}};

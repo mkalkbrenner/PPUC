@@ -104,6 +104,7 @@ void EffectsController::attachBrightnessControl(byte port, byte poti) {
 
 void EffectsController::setBrightness(byte port, byte brightness) {
     ws2812FXDevices[--port][0]->setBrightness(brightness);
+    ws2812FXbrightness[port] = brightness;
 }
 
 void EffectsController::handleEvent(Event* event) {
@@ -136,8 +137,53 @@ void EffectsController::handleEvent(Event* event) {
     }
 }
 
+void EffectsController::handleEvent(ConfigEvent* event) {
+    if (event->boardId == boardId) {
+        switch (event->topic) {
+            case CONFIG_TOPIC_LED_STRING:
+                switch (event->key) {
+                    case CONFIG_TOPIC_PORT:
+                        config_port = event->value;
+                        config_type = 0;
+                        config_amount = 0;
+                        config_afterGlow = 0;
+                        break;
+                    case CONFIG_TOPIC_TYPE:
+                        config_type = event->value;
+                        break;
+                    case CONFIG_TOPIC_AMOUNT_LEDS:
+                        config_amount = event->value;
+                        break;
+                    case CONFIG_TOPIC_AFTER_GLOW:
+                        config_afterGlow = event->value;
+                        break;
+                    case CONFIG_TOPIC_LIGHT_UP:
+                        config_heatUp = event->value;
+                        ws2812FXDevices[0][0] = new WS2812FXDevice(
+                                new WS2812FX(config_amount, config_port, config_type),
+                                0,
+                                config_amount - 1,
+                                0,
+                                0
+                        );
+                        ws2812FXDevices[0][0]->getWS2812FX()->init();
+                        ws2812FXDeviceCounters[0] = 1;
+
+                        // Brightness might be overwritten later.
+                        //ws2812FXDevices[0][0]->setBrightness(WS2812FX_BRIGHTNESS);
+                        ws2812FXDevices[0][0]->off();
+                        ws2812FXstates[0] = true;
+                        break;
+                }
+                break;
+        }
+    }
+}
+
 void EffectsController::update() {
-    _testButtons->update();
+    if (controllerType == CONTROLLER_MEGA_ALL_INPUT) {
+        _testButtons->update();
+    }
 
     if (platform == PLATFORM_WPC) {
         _generalIllumintationWPC->update();
@@ -156,15 +202,14 @@ void EffectsController::update() {
         // Updating the LEDs too fast leads to undefined behavior. Just update effects every 3ms.
         ws2812UpdateInterval = millis();
 
-        for (int i = 0; i <= 6; i++) {
+        for (int i = 0; i < PPUC_MAX_WS2812FX_DEVICES; i++) {
             if (ws2812FXstates[i]) {
                 if (ws2812FXrunning[i]) {
-
                     ws2812FXDevices[i][0]->getWS2812FX()->service();
 
                     bool stop = true;
                     for (int k = 0; k < ws2812FXDeviceCounters[i]; k++) {
-                        stop &= ws2812FXDevices[i][0]->isStopped();
+                        stop &= ws2812FXDevices[i][k]->isStopped();
                     }
 
                     if (stop) {
@@ -172,12 +217,12 @@ void EffectsController::update() {
                         ws2812FXrunning[i] = false;
                     }
                 } else {
-                    bool stop = true;
+                    bool start = false;
                     for (int k = 0; k < ws2812FXDeviceCounters[i]; k++) {
-                        stop &= ws2812FXDevices[i][0]->isStopped();
+                        start |= !ws2812FXDevices[i][k]->isStopped();
                     }
 
-                    if (!stop) {
+                    if (start) {
                         ws2812FXDevices[i][0]->getWS2812FX()->start();
                         ws2812FXrunning[i] = true;
                         ws2812FXDevices[i][0]->getWS2812FX()->service();
@@ -190,7 +235,7 @@ void EffectsController::update() {
     if (millis() - ws2812AfterGlowUpdateInterval > UPDATE_INTERVAL_WS2812FX_AFTERGLOW) {
         // Updating the LEDs too fast leads to undefined behavior. Just update every 3ms.
         ws2812AfterGlowUpdateInterval = millis();
-        for (int i = 0; i <= 6; i++) {
+        for (int i = 0; i < PPUC_MAX_WS2812FX_DEVICES; i++) {
             if (ws2812FXstates[i] && ws2812FXDevices[i][0]->hasAfterGlowSupport() && !ws2812FXrunning[i]) {
                 // No other effect is running, handle after glow effect.
                 ((CombinedGiAndLightMatrixWS2812FXDevice *) ws2812FXDevices[i][0])->updateAfterGlow();
@@ -199,21 +244,29 @@ void EffectsController::update() {
         }
     }
 
-    if (millis() - brightnessUpdateInterval > UPDATE_INTERVAL_WS2812FX_BRIGHTNESS) {
-        // Don't update the brightness too often.
-        brightnessUpdateInterval = millis();
-        for (byte i = 0; i < 4; i++) {
-            brightnessReads[i] = analogRead(38 + i) / 4;
-        }
-        for (byte i = 0; i < 7; i++) {
-            if (brightnessControl[i] > 0) {
-                setBrightness(i + 1, brightnessReads[brightnessControl[i]]);
+    if (brightnessControlBasePin > 0) {
+        if (millis() - brightnessUpdateInterval > UPDATE_INTERVAL_WS2812FX_BRIGHTNESS) {
+            // Don't update the brightness too often.
+            brightnessUpdateInterval = millis();
+            for (byte i = 0; i < PPUC_MAX_BRIGHTNESS_CONTROLS; i++) {
+                brightnessControlReads[i] = analogRead(brightnessControlBasePin + i) / 4;
+            }
+            for (byte i = 0; i < PPUC_MAX_WS2812FX_DEVICES; i++) {
+                if (brightnessControl[i] > 0) {
+                    setBrightness(i + 1, brightnessControlReads[brightnessControl[i - 1]]);
+                }
             }
         }
     }
 }
 
 void EffectsController::start() {
+    for (int i = 0; i < PPUC_MAX_WS2812FX_DEVICES; i++) {
+        if (ws2812FXbrightness[i] == 0) {
+            setBrightness(i + 1, WS2812FX_BRIGHTNESS);
+        }
+    }
+
     _eventDispatcher->dispatch(
         new Event(EVENT_SOURCE_EFFECT, 1, 255)
     );

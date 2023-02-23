@@ -36,7 +36,7 @@ void SwitchMatrix::readRow(int pin) {
     if (columnCounter >= 0 && columnCounter < lastColToRead) {
         //Serial.println(switchMatrixInstance->columnCounter, DEC);
 
-#if defined (__AVR__) || (__avr__)
+#if defined (__AVR_ATmega2560__)
         // Read row return at PIN 22 - 29 three times and use the majority of bits.
         byte a = PINA;
         delayMicroseconds(4);

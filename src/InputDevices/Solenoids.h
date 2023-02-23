@@ -9,7 +9,7 @@
 
 #define NUM_PINS 26
 
-#include <Arduino.h>
+#include "../PPUC.h"
 
 #include "../EventDispatcher/Event.h"
 #include "../EventDispatcher/EventDispatcher.h"
@@ -17,7 +17,7 @@
 class Solenoids {
 public:
     //Constructor
-    Solenoids(String controllerType, EventDispatcher* eD);
+    Solenoids(int controllerType, EventDispatcher* eD);
 
     // WPC
     void registerJ3(byte pin, byte number); // A16100 8-Driver PCB Assembly

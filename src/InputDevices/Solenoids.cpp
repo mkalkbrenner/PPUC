@@ -1,9 +1,9 @@
 #include "Solenoids.h"
 
-Solenoids::Solenoids(String controllerType, EventDispatcher* ed) {
+Solenoids::Solenoids(int controllerType, EventDispatcher* ed) {
     eventDispatcher = ed;
 
-    if (controllerType == "ArduinoMega") {
+    if (controllerType == CONTROLLER_MEGA_ALL_INPUT) {
         pins[0] = 8;
         pins[1] = 9;
         pins[2] = 10;

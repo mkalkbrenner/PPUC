@@ -11,48 +11,54 @@ void CombinedGiAndLightMatrixWS2812FXDevice::off() {
     reset();
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToGiString(uint8_t giString, int8_t led) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToGiString(uint8_t giString, int16_t led) {
     assignLedToGiString(giString, led, ULTRAWHITE);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToGiString(uint8_t giString, int8_t led, uint32_t color) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToGiString(uint8_t giString, int16_t led, uint32_t color) {
     if (numLEDsGI[--giString] < _MAX_LEDS_GI_STRING) {
         ledGIPositions[giString][numLEDsGI[giString]] = led;
         ledGIColors[giString][numLEDsGI[giString]++] = color;
     }
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrix(uint8_t column, uint8_t row, int8_t led) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedRangeToGiString(uint8_t giString, int16_t first, int16_t last) {
+    for (int16_t i = first; i <= last; i++) {
+        assignLedToGiString(giString, i);
+    }
+}
+
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrix(uint8_t column, uint8_t row, int16_t led) {
     assignLedToLightMatrix(column, row, led, ULTRAWHITE);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrix(uint8_t column, uint8_t row, int8_t led, uint32_t color) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrix(uint8_t column, uint8_t row, int16_t led, uint32_t color) {
     assignLedToLightMatrixDE(((column - 1) * 8) + row , led, color);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixWPC(uint8_t number, int8_t led) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixWPC(uint8_t number, int16_t led) {
     assignLedToLightMatrixWPC(number, led, ULTRAWHITE);
     wpc = true;
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixWPC(uint8_t number, int8_t led, uint32_t color) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixWPC(uint8_t number, int16_t led, uint32_t color) {
     assignLedToLightMatrix(number / 10 % 10, number % 10, led, color);
     wpc = true;
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixSYS11(uint8_t number, int8_t led) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixSYS11(uint8_t number, int16_t led) {
     assignLedToLightMatrixDE(number, led, ULTRAWHITE);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixSYS11(uint8_t number, int8_t led, uint32_t color) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixSYS11(uint8_t number, int16_t led, uint32_t color) {
     assignLedToLightMatrixDE(number, led, color);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixDE(uint8_t number, int8_t led) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixDE(uint8_t number, int16_t led) {
     assignLedToLightMatrixDE(number, led, ULTRAWHITE);
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixDE(uint8_t number, int8_t led, uint32_t color) {
+void CombinedGiAndLightMatrixWS2812FXDevice::assignLedToLightMatrixDE(uint8_t number, int16_t led, uint32_t color) {
     --number;
     for (int i = 0; i < _MAX_LEDS_PER_LIGHT; i++) {
         if (ledLightMatrixPositions[number][i] == -1) {
@@ -292,7 +298,7 @@ void CombinedGiAndLightMatrixWS2812FXDevice::updateAfterGlow() {
     }
 }
 
-void CombinedGiAndLightMatrixWS2812FXDevice::setDimmedPixelColor(int led, uint32_t color, uint8_t brightness) {
+void CombinedGiAndLightMatrixWS2812FXDevice::setDimmedPixelColor(int16_t led, uint32_t color, uint8_t brightness) {
     uint8_t w = (color >> 24) & 0xFF;
     uint8_t r = (color >> 16) & 0xFF;
     uint8_t g = (color >> 8) & 0xFF;
