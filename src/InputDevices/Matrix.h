@@ -70,7 +70,7 @@
 #ifndef Matrix_h
 #define Matrix_h
 
-#include <Arduino.h>
+#include "../PPUC.h"
 
 #include "../EventDispatcher/Event.h"
 #include "../EventDispatcher/EventDispatcher.h"

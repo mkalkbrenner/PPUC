@@ -9,7 +9,7 @@
 
 #define NUM_PINS 26
 
-#include <Arduino.h>
+#include "../PPUC.h"
 
 #include "../EventDispatcher/Event.h"
 #include "../EventDispatcher/EventDispatcher.h"

@@ -1,14 +1,12 @@
 /*
   DistributionController.h
-  Created by Markus Kalkbrenner, 2020-2021.
-
-  Play more pinball!
+  Created by Markus Kalkbrenner.
 */
 
 #ifndef DISTRIBUTIONCONTROLLER_h
 #define DISTRIBUTIONCONTROLLER_h
 
-#include <Arduino.h>
+#include "PPUC.h"
 
 #include "EventDispatcher/EventDispatcher.h"
 #include "EventDispatcher/EventListener.h"
@@ -17,11 +15,11 @@
 
 class DistributionController {
 public:
-    DistributionController(String controllerType, byte pf) {
+    DistributionController(int controllerType, byte pf) {
         platform = pf;
         _eventDispatcher = new EventDispatcher();
 
-        if (controllerType == "0.1.0") {
+        if (controllerType == CONTROLLER_MEGA_ALL_INPUT) {
             _vpxComLink = new VPXComLink(_eventDispatcher, platform);
             _testButtons = new DistributionControllerTestButtons(_eventDispatcher);
 

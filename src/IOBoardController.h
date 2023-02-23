@@ -1,8 +1,6 @@
 /*
   IOBoardController.h
-  Created by Markus Kalkbrenner, 20222.
-
-  Play more pinball!
+  Created by Markus Kalkbrenner.
 
   GPIO0-7: Input (Switches) or low power output
   GPIO8-15: Input (Switches)
@@ -16,7 +14,7 @@
 #ifndef IOBOARDCONTROLLER_h
 #define IOBOARDCONTROLLER_h
 
-#include <Arduino.h>
+#include "PPUC.h"
 
 #include "EventDispatcher/Event.h"
 #include "EventDispatcher/EventDispatcher.h"

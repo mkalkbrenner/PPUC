@@ -1,14 +1,12 @@
 /*
   InputController.h
-  Created by Markus Kalkbrenner, 2020-2021.
-
-  Play more pinball!
+  Created by Markus Kalkbrenner.
 */
 
 #ifndef INPUTCONTROLLER_h
 #define INPUTCONTROLLER_h
 
-#include <Arduino.h>
+#include "PPUC.h"
 
 #include "EventDispatcher/Event.h"
 #include "EventDispatcher/EventDispatcher.h"

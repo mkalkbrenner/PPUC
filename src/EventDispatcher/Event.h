@@ -8,16 +8,6 @@
 #ifndef EVENT_h
 #define EVENT_h
 
-#define PLATFORM_WPC           1
-#define PLATFORM_DATA_EAST     2
-#define PLATFORM_SYS11         3
-#define PLATFORM_LIBPINMAME    100
-
-#define CONTROLLER_MEGA_ALL_INPUT   1
-#define CONTROLLER_MEGA_ALL_INPUT_2 2
-#define CONTROLLER_NANO_PIN2DMD_GI  10
-#define CONTROLLER_16_8_1           20
-
 #define EVENT_SOURCE_ANY      42 // "*"
 #define EVENT_SOURCE_DEBUG    66 // "B" Debug
 #define EVENT_CONFIGURATION   67 // "C" Configure I/O

@@ -3,7 +3,7 @@
 Solenoids::Solenoids(int controllerType, EventDispatcher* ed) {
     eventDispatcher = ed;
 
-    if (controllerType == CONTROLLER_MEGA_ALL_INPUT || controllerType == CONTROLLER_MEGA_ALL_INPUT_2) {
+    if (controllerType == CONTROLLER_MEGA_ALL_INPUT) {
         pins[0] = 8;
         pins[1] = 9;
         pins[2] = 10;
